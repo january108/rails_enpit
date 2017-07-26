@@ -1,0 +1,20 @@
+language: ruby
+rvm:
+- 2.2.5
+- 1.9.3
+- jruby-19mode
+- rbx-2
+deploy:
+  provider: heroku
+  api_key:
+    secure: cdDjX1I+xefENSYu4BLcSPQWSmttzqQbZcWF5t22hw/p79g6SADGFmHnA3RY9kMCNPaGTgXAfyr2aMNyRRuSNSCZGqIExLaBDqlvu8IkWUsH/ejBF8h+cCVo/RqirGWotoWnME8bNc7FIKe64LWAoMfknC3XGzvtPHqEa692r7BwHhmCEg/VR9UQMo4jTOdj6YD4H6bOXT6enPR1kDSC6UsXEBExHsDulyn+T0mX9QD2Cnk95e147j+wv6STekioDmX6imV/HQSLI7cg3XLZu4fA1imVwpzpvmD88zvGZa2YJxi1IY2D5GGp2KnHdd+5+tKi/mKfb4cftxFX9L13o5VG/+4LGCqQfAZQH5dFeWpUbWEWOzcH/3sQu6IMbKinMJvSJf8c7KXDrFZWwM9rjJT3rFUvWwEs0JsToxd81ILASy8TxVRrBfTdsCBbu0BC8h3WixBXBLGUQHkT75zjCRl0h+pzxD0av19OuIKRDwE5XRc2TLEzV0CN1RBO2X1sXcuwVjZjv/EUAoMDa5br+C4uvti7n6tQgdPHZ3qnonHZwjRECdp7S33La2AfwQwWSULC2Y7Kq/hugkBNCiBs/zFjwcU7qkSfx2eD7UQhJb+iBWXWQdMcHUW9il/vpWo1BEvBIJpWzk84jRhniiB8HWe+j77771nhiXsJsXRQ7QQ=
+  app: collabo3-rails
+  on:
+    repo: january108/rails_enpit
+addons:
+  postgresql: "9.3"
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
+  - bundle exec rake db:migrate RAILS_ENV=test
+
